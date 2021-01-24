@@ -5,6 +5,6 @@ setup(
     packages = ['sclbl'],
     entry_points = {
         'console_scripts': [
-            'sclbl = sclbl.__main__:main'
+            'sclbl = sclbl.cli:main'
         ]
-    })
+    }, install_requires=['click'])

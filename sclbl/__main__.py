@@ -1,15 +1,5 @@
-import click
-
-@click.group()
-
-
-def main():
-    print("print main..")
-
-@main.command()
-def upload():
-    print("upload")
-
+# Executed when running
+# > python sclbl
+# from terminal.
 if __name__ == '__main__':
-    print("test sclbl")
-    main()
+    print("After installation using pip install, you can use the sclbl package without invoking 'python'.")
