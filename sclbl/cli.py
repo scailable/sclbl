@@ -2,13 +2,10 @@ import click
 import sclbl._globals as glob
 from sclblpy import _set_taskmanager_URL, _set_toolchain_URL, _set_usermanager_URL, stop_print, \
     upload_onnx, update_onnx, \
-    models as spmodels, \
-    assignments as spassignments, \
-    devices as spdevices, \
+    models as spmodels, delete_model, \
+    assignments as spassignments, assign as spassign, delete_assignment, \
+    devices as spdevices, delete_device, \
     remove_credentials
-
-
-# Todo(McK): After all tests etc. Check if silent mode it is fully silent.
 
 
 @click.group()
@@ -22,8 +19,8 @@ def main():
 
 
 # init initializes the package; this is called by main (which is called whenever the package is used).
-def init():
-    if not glob.DEBUG:  # If package not in debug mode, suppress printing from sclblpy.
+def init(debug=glob.DEBUG):
+    if not debug:  # If package not in debug mode, suppress printing from sclblpy.
         stop_print()
 
     # Set the correct target servers (see _globals.py)
@@ -151,14 +148,59 @@ def assignments(offset, limit, verbose):
             print("Unable to retrieve your assignments.")
 
 
-# `assign` : Create a new assignment
-# `delete` : Delete a model, assignment, or id.
+# assign creates a new assignment
+@click.command()
+@click.option('--cfid', '-cfid', type=str, required=True, help="The computed function / model ID (cfid).")
+@click.option('--did', '-did', type=str, required=True, help="The device ID.")
+@click.option('--rid', '-rid', type=str, required=True, help="The registration ID (see devices).")
+@click.option('--verbose', '-v', type=bool, required=True, default=True, help="Provide user feedback.")
+def assign(cfid, did, rid, verbose):
+    # assign
+    result = spassign(cfid, did, rid, glob.DEBUG)
+    if verbose:
+        if result:
+            print("Assignment successfully created.")
+        else:
+            print("We were unable to create your assignment.")
+
+
+# delete deletes a model, device, or assignment.
+@click.command()
+@click.option('--cfid', '-cfid', type=str, default="", required=False, help="The computed function / model ID (cfid).")
+@click.option('--did', '-did', type=str, default="", required=False, help="The device ID.")
+@click.option('--aid', '-aid', type=str, default="", required=False, help="The assignment ID (see assignments).")
+@click.option('--verbose', '-v', type=bool, required=True, default=True, help="Provide user feedback.")
+def delete(cfid, did, aid, verbose):
+
+    result = False
+    if cfid:
+        if verbose:
+            print("Deleting model with id: " + cfid)
+        result = delete_model(cfid)
+    elif did:
+        if verbose:
+            print("Deleting device with id: " + cfid)
+        result = delete_device(did)
+    elif aid:
+        if verbose:
+            print("Deleting assignment with id: " + cfid)
+        result = delete_assignment(aid)
+    else:
+        if verbose:
+            print("Please provide a cfid, did, or aid.")
+
+    if verbose:
+        if result:
+            print("Delete action successful.")
+        else:
+            print("The delete action failed.")
+
+
 
 # reset resets a user's details
 @click.command()
 @click.option('--verbose', '-v', type=bool, required=True, default=True, help="Provide user feedback.")
 def reset(verbose):
-
     # reset
     result = remove_credentials(glob.DEBUG)
     if verbose:
@@ -168,11 +210,12 @@ def reset(verbose):
             print("Unable to remove your user detials.")
 
 
-# cutfull is a utility to print string of the right lengt
+# cutfill is a utility to print string of the right length
 def cutfill(string, length):
     out = (string[:(length-2)] + '..') if len(string) > length else string
     return out.ljust(length)
 
 
+# Run if ran as main
 if __name__ == '__main__':
-    print("Make sure to...")
+    print("No options running as main.")
