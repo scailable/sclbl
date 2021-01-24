@@ -88,6 +88,6 @@ if RUN_TESTS:
     init(DEBUG)  # Initialize to make sure the correct servers are set
 # test_upload()
 # test_models()
-# test_devices()
+test_devices()
 # test_assignments()
-test_reset()
+# test_reset()

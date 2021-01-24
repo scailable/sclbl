@@ -7,4 +7,4 @@ setup(
         'console_scripts': [
             'sclbl = sclbl.cli:main'
         ]
-    }, install_requires=['click'])
+    }, install_requires=['click', 'sclblpy'])
