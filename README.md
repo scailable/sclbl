@@ -1,8 +1,8 @@
-# sclbl CLI interface.
+# The sclbl CLI tools.
 
 Main usage:
 ```shell script
-$ sclbl upload -f file.onnx -n Model name
+$ sclbl upload -f file.onnx -n "Model name"
 ```
 
 The package exposes the following commands:
@@ -23,5 +23,6 @@ username and password locally. You can remove the stored local details using:
 
 See `sclbl command --help` for additional information and the required arguments/options.
 
-Note that the sclbl CLI depends on the sclblpy package. See https://pypi.org/project/sclblpy/ for details. 
+Note that the sclbl CLI depends on the `sclblpy` package. See https://pypi.org/project/sclblpy/ for details. 
+The CLI needs at least version 0.1.6 of the `sclblpy` package to work.
 If you would like to upload fitted `sklearn` models, please use the `sclblpy` package directly from python.
