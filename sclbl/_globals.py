@@ -1,7 +1,7 @@
 # Global settings for the sclbl CLI commands
 
 # Settings:
-EXEC_MODE = "local"  # or "develop" or "live"
+EXEC_MODE = "live"  # or "develop" or "live"
 DEBUG = False  # Set debug mode (extensive printing from sclblpy package)
 
 # Servers
