@@ -14,8 +14,8 @@ from sclblpy import assignments as spassignments
 
 RUN_TESTS = True  # Prevent unintended testing
 DEBUG = True  # Set debugging / verbose feedback
-USER = "maurits@mauritskaptein.com"
-PASS = "test"
+USER = "..."
+PASS = "..."
 
 
 # test_upload tests the upload() function:
